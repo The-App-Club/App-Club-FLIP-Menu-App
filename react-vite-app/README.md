@@ -2,3 +2,4 @@
   - [original demo](https://github.com/aholachek/react-stripe-menu)
   - [react-menu](https://szhsin.github.io/react-menu)
   - [everything-you-need-to-know-about-flip-animations-in-react](https://css-tricks.com/everything-you-need-to-know-about-flip-animations-in-react/)
+  - [stripe demo](https://stripe.com/jp)
