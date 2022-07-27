@@ -17,58 +17,56 @@ const navbarConfig = [
 const AnimatedNavbar = ({duration = 300}) => {
   const animatingOutTimeout = useRef(null);
   const [animatingOut, setAnimatingOut] = useState(true);
-  const [activeIndices, setActiveIndices] = useState([]);
   const [activeMenuIndex, setActiveMenuIndex] = useState(null);
-
   const lastActiveMenuIndex = usePrevious(activeMenuIndex);
 
-  const resetDropdownState = (i) => {
-    setAnimatingOut(false);
-    setActiveIndices(typeof i === 'number' ? [i] : []);
-    if (animatingOutTimeout.current) {
-      clearTimeout(animatingOutTimeout.current);
+  const mode = useMemo(() => {
+    if (lastActiveMenuIndex === null && activeMenuIndex === null) {
+      return `standby`;
+    } else if (lastActiveMenuIndex === null && activeMenuIndex !== null) {
+      return `fadeIn`;
+    } else if (lastActiveMenuIndex !== null && activeMenuIndex === null) {
+      return `fadeOut`;
+    } else if (lastActiveMenuIndex === activeMenuIndex) {
+      return `stay`;
+    } else if (lastActiveMenuIndex < activeMenuIndex) {
+      return `right`;
+    } else if (lastActiveMenuIndex > activeMenuIndex) {
+      return `left`;
+    } else {
+      // nothing handle mode
+      return `stayout`;
     }
-  };
+  }, [lastActiveMenuIndex, activeMenuIndex]);
 
-  console.log(lastActiveMenuIndex, activeMenuIndex);
+  // console.log(mode, lastActiveMenuIndex, activeMenuIndex);
 
   const handleMouseEnter = useCallback((e, i) => {
-    setActiveMenuIndex(i);
     if (animatingOutTimeout.current) {
       clearTimeout(animatingOutTimeout.current);
-      resetDropdownState(i);
-      return;
     }
-    if (activeIndices[activeIndices.length - 1] === i) {
-      return;
-    }
-    setActiveIndices((prevActiveIndices) => {
-      return prevActiveIndices.concat(i);
-    });
+    setActiveMenuIndex(i);
     setAnimatingOut(false);
   }, []);
 
   const handleMouseLeave = useCallback((e) => {
     setAnimatingOut(true);
     animatingOutTimeout.current = setTimeout(() => {
-      resetDropdownState();
+      setActiveMenuIndex(null);
+      setAnimatingOut(false);
     }, duration);
   }, []);
 
-  const currentIndex = useMemo(() => {
-    return activeIndices[activeIndices.length - 1];
-  }, [activeIndices]);
-
   const CurrentDropdown = useMemo(() => {
-    if (typeof currentIndex === 'number') {
-      return navbarConfig[currentIndex].dropdown;
+    if (activeMenuIndex !== null) {
+      return navbarConfig[activeMenuIndex].dropdown;
     }
     return null;
-  }, [currentIndex]);
+  }, [activeMenuIndex]);
 
   return (
     <Flipper
-      flipKey={currentIndex}
+      flipKey={activeMenuIndex}
       spring={duration === 300 ? 'noWobble' : {stiffness: 10, damping: 10}}
     >
       <nav
@@ -96,8 +94,9 @@ const AnimatedNavbar = ({duration = 300}) => {
                 handleMouseEnter={handleMouseEnter}
                 handleFocus={handleMouseEnter}
               >
-                {currentIndex === index && (
+                {activeMenuIndex === index && (
                   <DropdownContainer
+                    mode={mode}
                     animatingOut={animatingOut}
                     duration={duration}
                   >

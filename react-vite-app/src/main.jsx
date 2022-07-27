@@ -5,7 +5,17 @@ import './styles/index.scss';
 import {AnimatedNavbar} from './components/AnimatedNavbar';
 
 const App = () => {
-  return <AnimatedNavbar duration={300} />;
+  return (
+    <div
+      className={css`
+        width: 100%;
+        background: wheat;
+        min-height: 100vh;
+      `}
+    >
+      <AnimatedNavbar duration={300} />
+    </div>
+  );
 };
 
 const container = document.getElementById('root');

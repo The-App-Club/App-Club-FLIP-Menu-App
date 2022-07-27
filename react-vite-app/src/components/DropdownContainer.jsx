@@ -5,9 +5,9 @@ import {Caret} from './Caret';
 import {DropdownRoot} from './DropdownRoot';
 import {FadeContents} from './FadeContents';
 
-const DropdownContainer = ({children, animatingOut, duration}) => {
+const DropdownContainer = ({children, animatingOut, duration, mode}) => {
   return (
-    <DropdownRoot animatingOut={animatingOut} duration={duration}>
+    <DropdownRoot animatingOut={animatingOut} duration={duration} mode={mode}>
       <Flipped flipId="dropdown-caret">
         <div
           className={css`
