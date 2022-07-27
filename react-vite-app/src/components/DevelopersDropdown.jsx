@@ -13,7 +13,6 @@ const DevelopersDropdown = () => {
           width: 100%;
           min-height: 30rem;
           padding: 1rem;
-          background: #fff;
         `}
       >
         <p>DevelopersDropdown</p>

@@ -25,9 +25,7 @@ const DropdownRoot = ({animatingOut = false, duration = 300, children}) => {
         will-change: transform;
         animation-name: ${createKeyframe({animatingOut})};
         animation-duration: ${duration}ms;
-        /* use 'forwards' to prevent flicker on leave animation */
-        animation-fill-mode: forwards;
-        /* flex styles will center the caret child component */
+        animation-fill-mode: both;
         display: flex;
         flex-direction: column;
         align-items: center;

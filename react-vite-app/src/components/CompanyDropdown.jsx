@@ -13,7 +13,6 @@ const CompanyDropdown = () => {
           width: 100%;
           min-height: 20rem;
           padding: 1rem;
-          background: #fff;
         `}
       >
         <p>CompanyDropdown</p>

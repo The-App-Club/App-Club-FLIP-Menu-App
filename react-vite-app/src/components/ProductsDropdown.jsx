@@ -13,7 +13,6 @@ const ProductsDropdown = () => {
           width: 100%;
           min-height: 10rem;
           padding: 1rem;
-          background: #fff;
         `}
       >
         <p>ProductsDropdown</p>
