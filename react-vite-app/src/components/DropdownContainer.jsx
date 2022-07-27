@@ -28,7 +28,6 @@ const DropdownContainer = ({children, animatingOut, duration, mode}) => {
             overflow: hidden;
             position: relative;
             will-change: transform;
-            padding: 1rem;
           `}
         >
           <Flipped inverseFlipId="dropdown">

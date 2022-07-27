@@ -68,10 +68,15 @@ const AnimatedNavbar = ({duration = 300}) => {
     <Flipper
       flipKey={activeMenuIndex}
       spring={duration === 300 ? 'noWobble' : {stiffness: 10, damping: 10}}
+      className={css`
+        @media (max-width: 768px) {
+          display: none;
+        }
+      `}
     >
       <nav
         className={css`
-          padding-top: 3rem;
+          padding-top: 1rem;
           margin: auto;
         `}
         onMouseLeave={handleMouseLeave}
@@ -100,7 +105,7 @@ const AnimatedNavbar = ({duration = 300}) => {
                     animatingOut={animatingOut}
                     duration={duration}
                   >
-                    {CurrentDropdown && <CurrentDropdown />}
+                    {CurrentDropdown && <CurrentDropdown title={item.title} />}
                   </DropdownContainer>
                 )}
               </NavItem>

@@ -4,7 +4,7 @@ const createKeyframe = ({animatingOut, mode}) => {
   if (mode === `fadeIn`) {
     return keyframes`
       from {
-        transform: rotateX(-15deg);
+        transform: rotateX(-30deg);
         opacity: 0;
       }
       to {
@@ -19,7 +19,7 @@ const createKeyframe = ({animatingOut, mode}) => {
         opacity: 1;
       }
       to {
-        transform: rotateX(-15deg);
+        transform: rotateX(-30deg);
         opacity: 0;
       }
     `;
