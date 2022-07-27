@@ -4,11 +4,10 @@ const Caret = ({color = `#fff`}) => {
   return (
     <div
       className={css`
-        width: 0;
-        height: 0;
-        border-width: 10px;
-        border-style: solid;
-        border-color: transparent transparent ${color};
+        width: 30px;
+        height: 30px;
+        background-color: ${color};
+        clip-path: polygon(50% 50%, 0% 100%, 100% 100%);
         z-index: 1;
         position: relative;
         top: 1px;

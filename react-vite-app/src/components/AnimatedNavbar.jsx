@@ -6,6 +6,7 @@ import NavItem from './NavItem';
 import {ProductsDropdown} from './ProductsDropdown';
 import {DevelopersDropdown} from './DevelopersDropdown';
 import {CompanyDropdown} from './CompanyDropdown';
+import {usePrevious} from '../hooks/usePrevious';
 
 const navbarConfig = [
   {title: 'Products', dropdown: ProductsDropdown},
@@ -17,16 +18,22 @@ const AnimatedNavbar = ({duration = 300}) => {
   const animatingOutTimeout = useRef(null);
   const [animatingOut, setAnimatingOut] = useState(true);
   const [activeIndices, setActiveIndices] = useState([]);
+  const [activeMenuIndex, setActiveMenuIndex] = useState(null);
+
+  const lastActiveMenuIndex = usePrevious(activeMenuIndex);
 
   const resetDropdownState = (i) => {
     setAnimatingOut(false);
     setActiveIndices(typeof i === 'number' ? [i] : []);
     if (animatingOutTimeout.current) {
-      delete animatingOutTimeout.current;
+      clearTimeout(animatingOutTimeout.current);
     }
   };
 
+  console.log(lastActiveMenuIndex, activeMenuIndex);
+
   const handleMouseEnter = useCallback((e, i) => {
+    setActiveMenuIndex(i);
     if (animatingOutTimeout.current) {
       clearTimeout(animatingOutTimeout.current);
       resetDropdownState(i);
@@ -66,6 +73,7 @@ const AnimatedNavbar = ({duration = 300}) => {
     >
       <nav
         className={css`
+          padding-top: 3rem;
           margin: auto;
         `}
         onMouseLeave={handleMouseLeave}

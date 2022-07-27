@@ -9,7 +9,16 @@ const DropdownContainer = ({children, animatingOut, duration}) => {
   return (
     <DropdownRoot animatingOut={animatingOut} duration={duration}>
       <Flipped flipId="dropdown-caret">
-        <Caret />
+        <div
+          className={css`
+            transform-origin: top left;
+            overflow: hidden;
+            position: relative;
+            will-change: transform;
+          `}
+        >
+          <Caret />
+        </div>
       </Flipped>
       <Flipped flipId="dropdown">
         <div
