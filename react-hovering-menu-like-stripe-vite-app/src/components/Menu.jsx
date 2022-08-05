@@ -18,6 +18,7 @@ const Menu = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [currentMenuName, setCurrentMenuName] = useState('');
   const controls = useAnimationControls();
+  const bgControls = useAnimationControls();
 
   const menuInfoList = useMemo(() => {
     return [
@@ -66,9 +67,17 @@ const Menu = () => {
     setContentDomWidth(contentDomRef.current.offsetWidth);
     if (currentMenuName) {
       controls.start({opacity: 1, x: left});
+      bgControls.start({
+        opacity: 1,
+        x: left,
+      });
     } else {
       if (!hovering) {
         controls.start({opacity: 0, x: left});
+        bgControls.start({
+          opacity: 0,
+          x: left,
+        });
       }
     }
   }, [currentMenuName, left, hovering]);
@@ -91,9 +100,8 @@ const Menu = () => {
         }
 
         li {
-          position: relative;
           /* border: 1px solid darkgray; */
-          min-width: 6rem;
+          min-width: 8rem;
           height: 2rem;
           :hover {
             cursor: pointer;
@@ -102,6 +110,8 @@ const Menu = () => {
             display: flex;
             justify-content: center;
             align-items: center;
+          }
+          &.active {
           }
         }
       `}
@@ -186,6 +196,17 @@ const Menu = () => {
           </div>
         </div>
       </motion.div>
+      <motion.li
+        animate={bgControls}
+        className={css`
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          z-index: -1;
+          background: #f3f3f3;
+        `}
+      />
       {menuInfoList.map((menuInfo, index) => {
         return (
           <motion.li
@@ -199,13 +220,17 @@ const Menu = () => {
             onHoverEnd={(e) => {
               setCurrentMenuName('');
             }}
-            className={css`
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              gap: 0.5rem;
-              padding: 5px;
-            `}
+            className={cx(
+              css`
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0 0.5rem;
+              `,
+              menuInfo.menuName,
+              `${currentMenuName === menuInfo.menuName ? 'active' : ''}`
+            )}
           >
             <div
               className={css`
