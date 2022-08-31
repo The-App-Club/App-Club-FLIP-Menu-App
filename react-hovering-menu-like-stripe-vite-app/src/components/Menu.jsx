@@ -80,6 +80,7 @@ const Menu = () => {
         });
       }
     }
+    console.log(`currentMenuName, hovering`, currentMenuName, hovering);
   }, [currentMenuName, left, hovering]);
 
   const handleDoMore = (e, {menuInfo}) => {
